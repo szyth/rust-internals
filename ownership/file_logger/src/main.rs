@@ -7,8 +7,13 @@ struct FileLogger {
 
 impl FileLogger {
     fn new(path: &str) -> std::io::Result<Self> {
+        let file = std::fs::OpenOptions::new()
+            .read(true)
+            .append(true)
+            .create(true)
+            .open(path)?;
         Ok(Self {
-            file: std::fs::File::create(path)?,
+            file,
             buffer: vec![],
         })
     }
