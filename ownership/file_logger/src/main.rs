@@ -45,5 +45,8 @@ fn main() -> std::io::Result<()> {
     logger.log("B".to_string()); // String works too!
     logger.log("C".to_string());
 
+    // std::mem::drop(logger); // or simply drop(logger)
+    // logger.log("D"); // ERROR: logger dropped
+
     Ok(())
 }
