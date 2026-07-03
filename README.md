@@ -13,3 +13,4 @@
   | `packet-counter` | `Cell`-based zero-cost counters on a `&self` API |
   | `str_split` | Generic string-splitting iterator, progressively refined (v1 → v6) |
   | `task-registry` | Type-erased callback registry — `Box<dyn Fn() + Send + 'static>` |
+  | `secret-vault` | Move semantics, `Copy`/`Clone` exclusion, ownership-enforced single-use guarantees |
