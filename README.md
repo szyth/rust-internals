@@ -15,3 +15,4 @@
   | `task-registry` | Type-erased callback registry — `Box<dyn Fn() + Send + 'static>` |
   | `secret-vault` | Move semantics, `Copy`/`Clone` exclusion, ownership-enforced single-use guarantees |
   | `packet-inspector` | Borrowing, aliasing (`shared XOR mutable`), NLL, two-phase borrows |
+  | `log-tokenizer` | Lifetime elision, multi-parameter lifetimes, independent field lifetimes |
