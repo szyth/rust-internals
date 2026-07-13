@@ -1,6 +1,6 @@
 # Rust Internals
 
-  Recreating and exploring advanced Rust patterns and internals. Each folder is a small, self-contained exercise built around a realistic scenario, not a toy demo.
+  Recreating and exploring advanced Rust patterns and internals. Each folder is a small, self-contained exercise built around a realistic scenario.
 
   ## Index
 
@@ -16,3 +16,5 @@
   | `secret-vault` | Move semantics, `Copy`/`Clone` exclusion, ownership-enforced single-use guarantees |
   | `packet-inspector` | Borrowing, aliasing (`shared XOR mutable`), NLL, two-phase borrows |
   | `log-tokenizer` | Lifetime elision, multi-parameter lifetimes, independent field lifetimes |
+  | `plugin-registry` | `'static` bound satisfaction (owned data vs. `&'static str` literals vs. a genuine `E0597` failure), `dyn Trait` type erasure vs. per-call borrow lifetimes |
+  | `credential-pool` | `Drop`/RAII auto-return (`MutexGuard`-style pattern) via `Rc<RefCell<_>>` shared state, LIFO drop ordering, wildcard `_` vs named-binding drop timing |
