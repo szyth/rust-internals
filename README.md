@@ -18,3 +18,4 @@
   | `log-tokenizer` | Lifetime elision, multi-parameter lifetimes, independent field lifetimes |
   | `plugin-registry` | `'static` bound satisfaction (owned data vs. `&'static str` literals vs. a genuine `E0597` failure), `dyn Trait` type erasure vs. per-call borrow lifetimes |
   | `credential-pool` | `Drop`/RAII auto-return (`MutexGuard`-style pattern) via `Rc<RefCell<_>>` shared state, LIFO drop ordering, wildcard `_` vs named-binding drop timing |
+  | `secrets-cache` | `Cell` vs `RefCell` choice by access shape, mutation through `&self` via interior mutability, `RefCell`'s runtime `BorrowMutError` panic vs. non-panicking `try_borrow_mut`, `Rc`-shared mutation across handles |
