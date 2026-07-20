@@ -21,4 +21,6 @@
   | `secrets-cache` | `Cell` vs `RefCell` choice by access shape, mutation through `&self` via interior mutability, `RefCell`'s runtime `BorrowMutError` panic vs. non-panicking `try_borrow_mut`, `Rc`-shared mutation across handles |
   | `process-ancestry-tree` | `Rc`+`Weak` parent/child tree that avoids a reference cycle (`RefCell<Vec<Rc<Node>>>` owns children, `RefCell<Weak<Node>>` observes parent), `Weak::upgrade()` reflecting live strong-owner state as owners drop one by one, cascading `Drop` triggered by releasing the last strong owner |
   | `audit-log-sanitizer` | `Cow`-based deferred allocation (zero-cost clean path, allocate only on redaction), `Cow::Borrowed`/`Owned` proven via variant matching (not just content), batch instrumentation of Borrowed vs Owned counts, `into_owned()` at the correct hand-off boundary, recovering the true `'a` lifetime via explicit `match` (not `Deref`/`AsRef`) |
+  | `descriptor-header` | `repr(C)`/`repr(packed)`/`repr(transparent)` layout, hand-derived and verified via `size_of`/`align_of`/`offset_of!`; manual field reordering vs. `repr(Rust)`'s auto-optimization; the `E0793` packed-reference hazard; const-time layout assertions |
+
 
