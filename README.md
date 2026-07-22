@@ -23,5 +23,6 @@
   | `audit-log-sanitizer` | `Cow`-based deferred allocation (zero-cost clean path, allocate only on redaction), `Cow::Borrowed`/`Owned` proven via variant matching (not just content), batch instrumentation of Borrowed vs Owned counts, `into_owned()` at the correct hand-off boundary, recovering the true `'a` lifetime via explicit `match` (not `Deref`/`AsRef`) |
   | `descriptor-header` | `repr(C)`/`repr(packed)`/`repr(transparent)` layout, hand-derived and verified via `size_of`/`align_of`/`offset_of!`; manual field reordering vs. `repr(Rust)`'s auto-optimization; the `E0793` packed-reference hazard; const-time layout assertions |
   | `log-line-truncator` | UTF-8 byte-boundary-safe truncation via `is_char_boundary` walk-back (never panics on a multi-byte split, at any offset), marker-appending within a fixed byte budget, exhaustive no-panic proof across every possible cutoff, correctness verified against mixed 1/2/3/4-byte UTF-8 |
+  | `log-filter-pipeline` | Static vs. dynamic dispatch on one trait; `Vec<Box<dyn Trait>>` heterogeneity; `E0038` dyn-incompatibility fixed via supertrait split or `where Self: Sized`; default-method `static` shared across monomorphized instantiations |
 
 
