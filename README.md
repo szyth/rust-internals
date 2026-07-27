@@ -26,5 +26,6 @@
   | `log-filter-pipeline` | Static vs. dynamic dispatch on one trait; `Vec<Box<dyn Trait>>` heterogeneity; `E0038` dyn-incompatibility fixed via supertrait split or `where Self: Sized`; default-method `static` shared across monomorphized instantiations |
   | `security-event-audit-trail` | Supertrait dependency enforced at the `impl` site (`E0277`) but granting zero shared implementation; default method overridden per type; `where`-clause bound; supertrait access proven one-directional|
   | `security-event-source` | Associated type limited to one `impl` per type (`E0119`) vs. generic parameter allowing multiple coexisting `impl`s for the same type; generic functions needing one vs. two type parameters for the equivalent shape;hybrid trait combining a generic key parameter with an associated output type |
+  | `ring-buffer` | Const generics (`RingBuffer<T, const N: usize>`) as genuinely distinct monomorphized types per `N` (`E0308`); fixed-capacity, stack-allocated overwrite-on-full semantics via `head`/`len` wraparound arithmetic; a `const { assert!(N > 0) }` block rejecting zero-capacity buffers at compile time (`E0080`), not runtime |
 
 
