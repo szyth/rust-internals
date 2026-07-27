@@ -25,5 +25,6 @@
   | `log-line-truncator` | UTF-8 byte-boundary-safe truncation via `is_char_boundary` walk-back (never panics on a multi-byte split, at any offset), marker-appending within a fixed byte budget, exhaustive no-panic proof across every possible cutoff, correctness verified against mixed 1/2/3/4-byte UTF-8 |
   | `log-filter-pipeline` | Static vs. dynamic dispatch on one trait; `Vec<Box<dyn Trait>>` heterogeneity; `E0038` dyn-incompatibility fixed via supertrait split or `where Self: Sized`; default-method `static` shared across monomorphized instantiations |
   | `security-event-audit-trail` | Supertrait dependency enforced at the `impl` site (`E0277`) but granting zero shared implementation; default method overridden per type; `where`-clause bound; supertrait access proven one-directional|
+  | `security-event-source` | Associated type limited to one `impl` per type (`E0119`) vs. generic parameter allowing multiple coexisting `impl`s for the same type; generic functions needing one vs. two type parameters for the equivalent shape;hybrid trait combining a generic key parameter with an associated output type |
 
 
