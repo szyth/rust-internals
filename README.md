@@ -27,5 +27,6 @@
   | `security-event-audit-trail` | Supertrait dependency enforced at the `impl` site (`E0277`) but granting zero shared implementation; default method overridden per type; `where`-clause bound; supertrait access proven one-directional|
   | `security-event-source` | Associated type limited to one `impl` per type (`E0119`) vs. generic parameter allowing multiple coexisting `impl`s for the same type; generic functions needing one vs. two type parameters for the equivalent shape;hybrid trait combining a generic key parameter with an associated output type |
   | `ring-buffer` | Const generics (`RingBuffer<T, const N: usize>`) as genuinely distinct monomorphized types per `N` (`E0308`); fixed-capacity, stack-allocated overwrite-on-full semantics via `head`/`len` wraparound arithmetic; a `const { assert!(N > 0) }` block rejecting zero-capacity buffers at compile time (`E0080`), not runtime |
+  | `credential-handle` | `Send`/`Sync` as auto traits proven via `assert_send`/`assert_sync` (`E0277`); `PhantomData<Rc<()>>` forcing `!Send`/`!Sync`; `unsafe impl Send`/`Sync` overriding it with a `SAFETY`-justified comment |
 
 
