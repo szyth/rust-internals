@@ -29,5 +29,6 @@
   | `ring-buffer` | Const generics (`RingBuffer<T, const N: usize>`) as genuinely distinct monomorphized types per `N` (`E0308`); fixed-capacity, stack-allocated overwrite-on-full semantics via `head`/`len` wraparound arithmetic; a `const { assert!(N > 0) }` block rejecting zero-capacity buffers at compile time (`E0080`), not runtime |
   | `credential-handle` | `Send`/`Sync` as auto traits proven via `assert_send`/`assert_sync` (`E0277`); `PhantomData<Rc<()>>` forcing `!Send`/`!Sync`; `unsafe impl Send`/`Sync` overriding it with a `SAFETY`-justified comment |
   | `scan-job-runner` | `Fn`/`FnMut`/`FnOnce` chosen by capture usage, not declaration; a retry loop (`FnMut`), an alert registry (`Fn + Send + Sync`, `Box<dyn Fn(&str) + Send + Sync>`), and a one-shot credential callback (`FnOnce`); the `E0596` gotcha calling an `FnMut` closure from a non-`mut` binding |
+  | `firewall-rule-validator` | Newtype pattern (`Port`, `Hostname`) preventing type confusion (`E0308`); `TryFrom` validated construction; `Deref` implemented then rejected after it leaked raw arithmetic; composed fallible conversions via `?` with errors unified through `From` |
 
 
