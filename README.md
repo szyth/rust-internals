@@ -30,5 +30,6 @@
   | `credential-handle` | `Send`/`Sync` as auto traits proven via `assert_send`/`assert_sync` (`E0277`); `PhantomData<Rc<()>>` forcing `!Send`/`!Sync`; `unsafe impl Send`/`Sync` overriding it with a `SAFETY`-justified comment |
   | `scan-job-runner` | `Fn`/`FnMut`/`FnOnce` chosen by capture usage, not declaration; a retry loop (`FnMut`), an alert registry (`Fn + Send + Sync`, `Box<dyn Fn(&str) + Send + Sync>`), and a one-shot credential callback (`FnOnce`); the `E0596` gotcha calling an `FnMut` closure from a non-`mut` binding |
   | `firewall-rule-validator` | Newtype pattern (`Port`, `Hostname`) preventing type confusion (`E0308`); `TryFrom` validated construction; `Deref` implemented then rejected after it leaked raw arithmetic; composed fallible conversions via `?` with errors unified through `From` |
+  | `log-line-scanner` | Lazy adapter chain (`map`/`inspect`/`filter`) proven to do nothing until a terminal call; short-circuiting `find()` over a genuinely infinite range vs. full-drain `collect()` over a bounded one; the `#[must_use]` guardrail on unconsumed iterators |
 
 
