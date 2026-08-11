@@ -33,5 +33,6 @@
   | `log-line-scanner` | Lazy adapter chain (`map`/`inspect`/`filter`) proven to do nothing until a terminal call; short-circuiting `find()` over a genuinely infinite range vs. full-drain `collect()` over a bounded one; the `#[must_use]` guardrail on unconsumed iterators |
   | `backoff-audit-trail` | Custom `Iterator` (`Backoff`, exponential-capped delay generator) built from just `next()`; `IntoIterator` implemented separately for `AuditTrail` (owned, consuming) and `&AuditTrail` (borrowed, leaves it usable); private-field encapsulation via a submodule (`E0616`), proven with the real `E0382`/`E0277` guardrails |
 | `rate-limiter-window` | `VecDeque`-backed sliding-window rate limiter (`O(1)` front-eviction) vs. a `Vec`-backed twin (`O(n)` `remove(0)`); benchmarked at two scales |
+| `login-attempt-tracker` | `entry()`-based get-or-insert-and-increment on a `HashMap<String, u32>`; `top_offenders` collect-and-sort report vs. a `BTreeMap`-backed twin's `.range()` query; a read-only lookup deliberately avoiding `entry()` to prevent a phantom `0`-count insert |
 
 
