@@ -35,5 +35,6 @@
 | `rate-limiter-window` | `VecDeque`-backed sliding-window rate limiter (`O(1)` front-eviction) vs. a `Vec`-backed twin (`O(n)` `remove(0)`); benchmarked at two scales |
 | `login-attempt-tracker` | `entry()`-based get-or-insert-and-increment on a `HashMap<String, u32>`; `top_offenders` collect-and-sort report vs. a `BTreeMap`-backed twin's `.range()` query; a read-only lookup deliberately avoiding `entry()` to prevent a phantom `0`-count insert |
 | `bearer-token-authorizer` | Five-step `Result`/`Option` combinator chain (`ok_or`/`ok_or_else`/`and_then`) replacing a nested `match` pyramid; each failure mode tagged with its own `AuthError` variant instead of collapsing to a bare `None`; the `.map()`-vs-`.and_then()` trap (a plain transform can't branch into `Ok`/`Err`) hit and fixed live |
+| `secure-config-loader` | Three fallible steps (`std::io::Error`, custom `ParseError`, custom `ValidationError`) unified into one `ConfigError` via `?` and three `From` impls; an inverted and later off-by-one port-range check caught live; `matches!` used over `assert_eq!` since `std::io::Error` has no `PartialEq` impl |
 
 
