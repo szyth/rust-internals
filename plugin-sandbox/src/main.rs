@@ -3,6 +3,7 @@
 // Spec: see §4 of "3.9 panic - unwind vs abort, catch_unwind, when to panic vs Result.md" in the vault.
 
 // Run Unsafe plugin: Version 1
+// Running and handling third-party, not-trusted plugins that coult panic inside our sandbox
 fn run_plugin_unsafe(plugin: impl FnOnce() -> bool) -> bool {
     plugin()
 }
