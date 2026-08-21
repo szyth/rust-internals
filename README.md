@@ -40,5 +40,6 @@
 | `plugin-sandbox` | Three escalating plugin-isolation strategies — unprotected, `catch_unwind`-wrapped (`PluginError::Panicked`, extracting both `&str`- and `String`-shaped panic payloads), and a preventive `Result`-returning plugin design needing no `catch_unwind` at all; the `UnwindSafe` wall on a captured `&mut ScanStats` hit on purpose and fixed by moving the mutation outside the sandboxed closure |
 | `packet-verdict-engine` | Real `lib.rs`+`main.rs` split combining an `@` binding, a match guard, exhaustiveness forced then broken by evolving `PacketVerdict` (`E0004` on the new `Log` variant), and `#[non_exhaustive]` blocking cross-crate struct-literal construction (`E0639`) on `RuleEngine` |
 | `parallel-password-auditor` | Chunked-parallel password audit via `thread::scope`/`s.spawn` vs. plain `thread::spawn`'s `'static` bound; `thread::scope` re-panicking on scope exit for an unjoined panicked thread vs. explicit `ScopedJoinHandle::join()` catching it gracefully with other chunks' results unaffected |
+| `security-event-bus` | `std::sync::mpsc` fan-in vs. `crossbeam_channel` multi-consumer work-stealing; the forgot-to-drop-the-original-`Sender` hang proven via the exact `RecvTimeoutError::Timeout` (not `Disconnected`) variant, not just an eventual return; |
 
 
