@@ -1,0 +1,9 @@
+# session-store
+
+A `Mutex`-backed session store built to reproduce, in real code, the two failure modes that make locking dangerous in production: a lock-ordering deadlock and a panic-induced poison — then fix both.
+
+## What's in here
+
+`SessionStore` holds two independently locked fields, `sessions: Mutex<HashMap<String, String>>` and `audit_log: Mutex<Vec<String>>`. `create_session` locks `sessions` then `audit_log`; `revoke_session_buggy` locks them in the opposite order, and with a `thread::sleep` inserted between the two locks to widen the race window, two threads calling `create_session`/`revoke_session_buggy` concurrently deadlock reliably. `test_deadlock` proves it without ever risking a hung test process: it waits on a bounded `mpsc::recv_timeout` rather than `.join()`-ing the (possibly permanently blocked) threads, and asserts the timeout fires. `revoke_session` is the fix — same lock order as `create_session` — and `test_no_deadlock` proves the identical concurrent scenario now completes cleanly.
+
+`list_sessions` handles the other failure mode: if a thread panics while holding the `sessions` lock, the `Mutex` poisons, and a plain `.lock().unwrap()` would propagate that panic to every future caller forever. Instead it matches on `LockResult`, recovering the guard via `PoisonError::into_inner()` on the `Err` branch, with a comment justifying *why* that's safe here — `create_session`/`revoke_session` have no panic point between acquiring the lock and finishing their mutation, so a poison can only happen from a panic that ran strictly after a completed insert/remove, never mid-mutation. `test_panic_during_a_lock_poisons_the_data_and_its_recovery` proves both halves: that the lock is genuinely poisoned (`.lock().is_err()`), and that the recovered data is real and usable, not just present (`list_sessions()` returns the session that was inserted immediately before the panic).

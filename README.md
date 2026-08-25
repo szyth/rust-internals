@@ -42,5 +42,6 @@
 | `parallel-password-auditor` | Chunked-parallel password audit via `thread::scope`/`s.spawn` vs. plain `thread::spawn`'s `'static` bound; `thread::scope` re-panicking on scope exit for an unjoined panicked thread vs. explicit `ScopedJoinHandle::join()` catching it gracefully with other chunks' results unaffected |
 | `security-event-bus` | `std::sync::mpsc` fan-in vs. `crossbeam_channel` multi-consumer work-stealing; the forgot-to-drop-the-original-`Sender` hang proven via the exact `RecvTimeoutError::Timeout` (not `Disconnected`) variant, not just an eventual return; |
 | `login-attempt-actor` | `tokio::sync` actor pattern (`mpsc` + `oneshot`) vs. `Arc<Mutex<HashMap<_, _>>>` for the same login-tracker state, both verified to produce identical concurrent output; |
+| `session-store` | `Mutex` lock-ordering deadlock reproduced then fixed via consistent lock order, proven via bounded `recv_timeout` rather than a hanging `.join()`; poison recovery via `PoisonError::into_inner()` with a justification comment, proven to return real usable data post-panic, not just a non-panicking result |
 
 
