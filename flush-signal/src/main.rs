@@ -109,6 +109,7 @@ impl Wake for ThreadWaker {
     }
 }
 
+// Hand-build executor
 // drive the future to completion, blocks if Poll::Pending
 fn block_on<T>(mut fut: Pin<&mut impl Future<Output = T>>) -> (T, i32) {
     let thread_waker = ThreadWaker(std::thread::current());
@@ -120,7 +121,8 @@ fn block_on<T>(mut fut: Pin<&mut impl Future<Output = T>>) -> (T, i32) {
         count_total_polls_for_assertion_later += 1;
         match Future::poll(fut.as_mut(), &mut cx) {
             Poll::Ready(output) => return (output, count_total_polls_for_assertion_later),
-            Poll::Pending => std::thread::park(), // Blocks the thread until awoken
+            Poll::Pending => std::thread::park(), // Blocks the thread until awoken, a real
+                                                  // executor will run another future from the queue rather than sleep
         }
     }
 }
